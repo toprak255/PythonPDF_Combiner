@@ -2,7 +2,7 @@ import tkinter as tk
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from tkinter import filedialog as fd
 import os
-#------CODE------
+
 version=1.0
 class Ptsd:
     pdflist={}
@@ -14,7 +14,6 @@ class Ptsd:
         ('Pdf files', '*.pdf'),
         ('All files', '*.*')
     )
-    
         filename = fd.askopenfilenames(
         title='Open a file',
         initialdir='/',
@@ -23,7 +22,6 @@ class Ptsd:
         for i in filename:
                 self.listbox.insert('end',os.path.basename(i))
                 self.pdflist[os.path.basename(i)]=i
-        
     def add(self):
         try:
             self.finallist.insert('end',self.listbox.get(self.listbox.curselection()))
@@ -42,7 +40,6 @@ class Ptsd:
         for path in self.trueorder:
             pdf_reader = PdfFileReader(path,strict=False)
             for page in range(pdf_reader.getNumPages()):
-                # Add each page to the writer object
                 self.pdf_writer.addPage(pdf_reader.getPage(page))
         try:
             with open((self.filepath), 'wb') as out:
@@ -51,7 +48,6 @@ class Ptsd:
             f = open("out.pdft", "x")
             with open((self.filepath), 'wb') as out:
                 self.pdf_writer.write(out)
-        #merge and save pdf to there
         pass
     def print(self):
         os.system("start file:///"+(self.filepath))
@@ -69,7 +65,7 @@ class Ptsd:
         self.body.minsize(500,300)
         self.body.maxsize(900,500)
     #------------------ 
-    colorthemes=[
+    colorpalettes=[
         #swanky
         ["#001f23",
          "#007a75",
@@ -83,32 +79,18 @@ class Ptsd:
          "#ffaa67",
          "#da674a"   
         ]
-        
     ]
-    #------------------
+
     def mainwin(self): 
         remove_button=tk.Button(self.body,command=self.remove,text="Remove",bg=self.colorthemes[0][1],activebackground=self.colorthemes[0][2])
         add_button=tk.Button(self.body,text="Add",command=self.add,bg=self.colorthemes[0][1],activebackground=self.colorthemes[0][2])
         self.listbox=tk.Listbox(self.body,background=self.colorthemes[0][2],foreground=self.colorthemes[1][3])
         self.finallist=tk.Listbox(self.body,background=self.colorthemes[0][2],foreground=self.colorthemes[1][3])
         merge_button=tk.Button(self.body,command=self.merge,text="Merge",bg=self.colorthemes[0][1],activebackground=self.colorthemes[0][2])
-        # autoprint=tk.Button(self.body,text="Auto-Print",bg=self.colorthemes[0][1],activebackground=self.colorthemes[0][2])
         #----------placements-------------
         remove_button.place(relx=.5,rely=.5,relheight=.10,relwidth=.15,anchor="center")
         add_button.place(relx=.5,rely=.35,relheight=.10,relwidth=.15,anchor="center")
         merge_button.place(relx=.5,rely=.65,relheight=.10,relwidth=.15,anchor="center")
         self.listbox.place(relx=.05,rely=.08,relheight=.80,relwidth=.30,anchor="nw")
         self.finallist.place(relx=.65,rely=.08,relheight=.80,relwidth=.30,anchor="nw")
-        # autoprint.place(relx=.55,rely=.89,relheight=.10,relwidth=.15,anchor="nw")
         self.body.mainloop()
-        
-
-
-
-
-
-
-
-
-
-
